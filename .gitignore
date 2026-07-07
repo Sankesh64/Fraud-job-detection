@@ -1,0 +1,5 @@
+venv/
+__pycache__/
+*.pyc
+Fake_Job_Detector.zip
+.env
