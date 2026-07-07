@@ -5,6 +5,8 @@ import string
 import spacy
 import numpy as np
 import scipy.sparse as sp
+import subprocess
+import sys
 
 # ---------------------------------------------
 # Load model
@@ -14,7 +16,11 @@ model = joblib.load("fraud_detector_xgboost.pkl")
 tfidf = joblib.load("tfidf_vectorizer.pkl")
 encoders = joblib.load("label_encoders.pkl")
 
-nlp = spacy.load("en_core_web_sm", disable=["parser","ner"])
+try:
+    nlp = spacy.load("en_core_web_sm", disable=["parser","ner"])
+except OSError:
+    subprocess.run([sys.executable, "-m", "spacy", "download", "en_core_web_sm"])
+    nlp = spacy.load("en_core_web_sm", disable=["parser","ner"])
 
 # ---------------------------------------------
 # Text Cleaning Function
